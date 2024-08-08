@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ланч с доставкой</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Хедер -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Ланч с доставкой</a></li>
+                <li><a href="{% url 'menu' %}">Меню</a></li>
+                <li><a href="{% url 'order' %}">Заказ</a></li>
+                <li><a href="{% url 'info' %}">Инфо</a></li>
+                {% if user.is_authenticated %}
+                    <li>Привет, {{ user.username }}</li>
+                    <li><a href="{% url 'logout' %}">Выйти</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Вход</a></li>
+                    <li><a href="{% url 'signup' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Контент -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <p>© 2024 Ланч с доставкой</p>
+    </footer>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

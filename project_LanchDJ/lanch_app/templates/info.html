@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Отзывы и комментарии</h2>
+<div class="comments">
+    {% for comment in comments %}
+    <div class="comment">
+        <p><strong>{{ comment.user.username }}</strong>:</p>
+        <p>{{ comment.content }}</p>
+        <p><small>{{ comment.created_at }}</small></p>
+    </div>
+    {% endfor %}
+</div>
+
+<h2>Рекламные посты и видео</h2>
+<div class="posts">
+    {% for post in posts %}
+    <div class="post">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        {% if post.video_url %}
+        <video controls>
+            <source src="{{ post.video_url.url }}" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+        {% endif %}
+        <p><small>{{ post.created_at }}</small></p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

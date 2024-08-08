@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="slider">
+    <img src="{% static 'images/kebab.jpg' %}" alt="Слайд 1">
+    <img src="{% static 'images/tasty1.jpg' %}" alt="Слайд 2">
+    <img src="{% static 'images/uzbek-cuisine.jpg' %}" alt="Слайд 3">
+    <img src="{% static 'images/sushi-rolls-maki.jpg' %}" alt="Слайд 4">
+    <img src="{% static 'images/cherries-black.jpg' %}" alt="Слайд 5">
+</div>
+
+<div class="video">
+    <video controls>
+        <source src="{% static 'video/steack.mp4' %}" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+</div>
+{% endblock %}

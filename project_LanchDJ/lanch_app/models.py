@@ -54,4 +54,4 @@ class Post(models.Model):
         return self.title
 from django.db import models
 
-# Create your models here.
+
