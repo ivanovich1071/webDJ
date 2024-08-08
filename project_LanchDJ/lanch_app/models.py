@@ -2,10 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 # Модель пользователя
+
 class User(AbstractUser):
-    telephon = models.CharField(max_length=15, verbose_name="Телефон")
+    telephon = models.CharField(max_length=15, unique=True, verbose_name="Телефон")
     is_admin = models.BooleanField(default=False, verbose_name="Администратор")
 
+    def __str__(self):
+        return self.username
 # Модель продукта
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
