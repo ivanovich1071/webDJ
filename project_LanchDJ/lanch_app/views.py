@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate, logout
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .models import Product, Order, OrderItem, Comment, Post
-from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
 
 # Главная страница
@@ -55,5 +57,33 @@ def remove_from_cart(request, product_id):
     order.save()
     return redirect('order')
 
+# Авторизация пользователя
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('index'))  # Перенаправление на главную страницу
+        else:
+            return render(request, 'login.html', {'error_message': 'Неправильное имя пользователя или пароль.'})
+    return render(request, 'login.html')
 
+# Функция регистрации нового пользователя
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+
+# Выход пользователя из системы
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
