@@ -1,14 +1,19 @@
 /* Основные стили */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: #333;
+    background-color: #f4f4f4;
+    height: 100vh; /* Установлено, чтобы 100% высоты экрана учитывалось */
+    display: flex;
+    flex-direction: column;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
+header, footer {
+    background-color: #222;
+    color: #eee;
     padding: 10px 0;
 }
 
@@ -29,13 +34,16 @@ header nav ul li a {
 }
 
 footer {
-    background-color: #333;
-    color: #fff;
     text-align: center;
     padding: 10px 0;
-    position: absolute;
+    position: relative;
     width: 100%;
-    bottom: 0;
+}
+
+.slider, .video {
+    width: 85%; /* Ширина 85% */
+    height: 50vh; /* Высота 50% экрана */
+    margin: 10px auto;
 }
 
 .slider {
@@ -45,77 +53,38 @@ footer {
 
 .slider img {
     width: 100%;
-    height: auto;
+    height: 100%; /* Заполняет 100% высоты блока */
+    object-fit: cover; /* Обеспечивает правильное отображение изображения */
 }
 
 .video {
     text-align: center;
-    margin: 20px 0;
 }
 
-.menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 20px;
-}
-
-.product-card {
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.product-card img {
+.video video {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 100%; /* Заполняет 100% высоты блока */
+    object-fit: cover; /* Обеспечивает правильное отображение видео */
 }
 
-.product-card h3 {
-    margin: 10px 0;
-}
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.product-card p {
-    padding: 0 10px;
-}
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.product-card form {
-    margin: 10px 0;
-}
+    .product-card {
+        width: 90%;
+        margin-bottom: 20px;
+    }
 
-.comments, .posts {
-    margin: 20px;
-}
-
-.comment, .post {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
-}
-
-.post video {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    display: block;
-    margin: 10px 0;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-}
-
-tfoot td {
-    font-weight: bold;
+    .slider, .video {
+        width: 90%; /* Чуть больше ширины на мобильных устройствах */
+        height: 40vh; /* Немного меньше высоты на мобильных устройствах */
+    }
 }
