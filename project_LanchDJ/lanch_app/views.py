@@ -18,10 +18,18 @@ def menu(request):
 # Страница заказа
 @login_required
 def order(request):
+    # Получаем все товары в заказе текущего пользователя
     order_items = OrderItem.objects.filter(order__user=request.user)
-    total_price = sum(item.product.price * item.quantity for item in order_items)
-    return render(request, 'order.html', {'order_items': order_items, 'total_price': total_price})
 
+    # Для каждого товара в заказе вычисляем его общую стоимость и добавляем в объект
+    for item in order_items:
+        item.total_price = item.product.price * item.quantity
+
+    # Вычисляем общую сумму заказа
+    total_price = sum(item.total_price for item in order_items)
+
+    # Передаем данные в шаблон
+    return render(request, 'order.html', {'order_items': order_items, 'total_price': total_price})
 # Страница информации
 def info(request):
     comments = Comment.objects.all()
@@ -33,11 +41,18 @@ def info(request):
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     order, created = Order.objects.get_or_create(user=request.user, defaults={'total_price': 0})
-    order_item, created = OrderItem.objects.get_or_create(order=order, product=product)
-    order_item.quantity += 1
-    order_item.save()
+
+    # При создании нового OrderItem сразу инициализируем поле quantity значением 1
+    order_item, created = OrderItem.objects.get_or_create(order=order, product=product, defaults={'quantity': 1})
+
+    if not created:
+        # Если элемент заказа уже существовал, увеличиваем его количество
+        order_item.quantity += 1
+        order_item.save()
+
     order.total_price += product.price
     order.save()
+
     return redirect('menu')
 
 # Удаление товара из корзины
